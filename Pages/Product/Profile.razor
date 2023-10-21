@@ -1,0 +1,44 @@
+@page "/profile"
+
+@using MyApplication.Data;
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Web
+
+<h1>User Profile</h1>
+
+<CascadingAuthenticationState>
+    <AuthorizedView>
+        <Authorized>
+            <p>Welcome, @username!</p>
+        </Authorized>
+        <NotAuthorized>
+            <p>You are not logged in. Please log in to view your profile.</p>
+        </NotAuthorized>
+    </AuthorizedView>
+</CascadingAuthenticationState>
+
+<button @onclick="LogOut">Log Out</button>
+
+@code {
+    private string username;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authenticationState = await authenticationStateTask;
+        var user = authenticationState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            username = user.FindFirst("preferred_username")?.Value;
+        }
+    }
+
+    private async Task LogOut()
+    {
+        // Handle logout logic
+    }
+}

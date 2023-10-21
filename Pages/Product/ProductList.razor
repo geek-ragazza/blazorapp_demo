@@ -1,0 +1,28 @@
+@page "/product/list"
+@using MyApplication.Data;
+@using BlazorApp.Models;
+@using BlazorApp.Pages.Components.Product
+
+<h1>Product List</h1>
+
+<div class="row">
+    <!-- Add code to display the list of products here -->
+    @foreach (var product in products)
+    {
+        <div class="col-md-4">
+            <ProductDisplayCard Product="@product" />
+        </div>
+    }
+</div>
+
+@code {
+    private List<Product> products = new List<Product>();
+
+    [Inject]
+    private ApplicationDbContext dbContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        products = dbContext.Product.ToList();
+    }
+}

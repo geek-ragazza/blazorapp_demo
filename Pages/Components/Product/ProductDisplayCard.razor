@@ -1,0 +1,15 @@
+@inherits ComponentBase
+@using BlazorApp.Models;
+<div class="card">
+    <img class="card-img-top" src="@Product.ProductImageUrl" alt="@Product.Name" style="max-height: 300px; max-width: 100%;" />
+    <div class="card-body">
+        <h5 class="card-title">@Product.Name</h5>
+        <p class="card-text">Price: @((int)Product.Price)</p>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public Product Product { get; set; }
+}

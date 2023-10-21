@@ -1,0 +1,41 @@
+<!-- ProductCreateForm.razor -->
+@inherits ComponentBase
+@using BlazorApp.Models;
+
+<EditForm Model="newProduct" OnValidSubmit="CreateProduct">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <InputText id="Name" class="form-control" @bind-Value="newProduct.Name" />
+        <ValidationMessage For="@(() => newProduct.Name)" TValue="string" />
+    </div>
+
+    <div class="form-group">
+        <label for="Price">Price</label>
+        <InputNumber id="Price" class="form-control" @bind-Value="newProduct.Price" />
+        <ValidationMessage For="@(() => newProduct.Price)" TValue="decimal" />
+    </div>
+
+    <div class="form-group">
+        <label for="ProductImageUrl">Product Image URL</label>
+        <InputText id="ProductImageUrl" class="form-control" @bind-Value="newProduct.ProductImageUrl" />
+        <ValidationMessage For="@(() => newProduct.ProductImageUrl)" TValue="string" />
+    </div>
+
+    <ValidationSummary />
+    <button type="submit" class="btn btn-primary">Create</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Product newProduct { get; set; }
+
+    [Parameter]
+    public Func<Task> OnValidSubmit { get; set; }
+
+    private async Task CreateProduct()
+    {
+        await OnValidSubmit.Invoke();
+    }
+}
