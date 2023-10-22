@@ -101,7 +101,7 @@
         <RadzenCategoryAxis Padding="20" />
         <RadzenValueAxis>
             <RadzenGridLines Visible="true" />
-            <RadzenAxisTitle Text="Revenue in USD" />
+            <RadzenAxisTitle Text="Local Price" />
         </RadzenValueAxis>
     </RadzenChart>
     </RadzenColumn>
@@ -125,7 +125,7 @@
     private List<BigMacData> bigMacData;
     private List<BigMacData> filteredData;
     private List<Country> uniqueCountries;
-    private string selectedCountry;
+    private string selectedCountry = "USA";
     private BigMacData mostExpensiveItem;
     private BigMacData cheapestItem;
 
@@ -148,7 +148,7 @@
     {
         // Initialize data using BigMacDataService
         bigMacData = bigMacDataService.GetBigMacData();
-        filteredData = bigMacData;
+        filteredData = bigMacData.Where(item => item.Country.IsoA3 == selectedCountry).ToList();
         uniqueCountries = bigMacData
             .Select(item => new Country { Name = item.Country.Name, IsoA3 = item.Country.IsoA3 })
             .Distinct()
@@ -173,9 +173,6 @@
         {
             filteredData = bigMacData.Where(item => item.Country.IsoA3 == selectedCountry).ToList();
         }
-        else
-        {
-            filteredData = bigMacData;
-        }
+        
     }
 }
