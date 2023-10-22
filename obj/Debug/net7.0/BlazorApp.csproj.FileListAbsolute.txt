@@ -265,3 +265,6 @@
 /Users/vickychan/Documents/DotNetPractice/BlazorApp/bin/Debug/net7.0/Pomelo.EntityFrameworkCore.MySql.dll
 /Users/vickychan/Documents/DotNetPractice/BlazorApp/bin/Debug/net7.0/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
 /Users/vickychan/Documents/DotNetPractice/BlazorApp/obj/Debug/net7.0/scopedcss/Pages/Components/Product/ProductDisplayCard.razor.rz.scp.css
+/Users/vickychan/Documents/DotNetPractice/BlazorApp/bin/Debug/net7.0/Radzen.Blazor.dll
+/Users/vickychan/Documents/DotNetPractice/BlazorApp/bin/Debug/net7.0/System.Linq.Dynamic.Core.dll
+/Users/vickychan/Documents/DotNetPractice/BlazorApp/bin/Debug/net7.0/CsvHelper.dll

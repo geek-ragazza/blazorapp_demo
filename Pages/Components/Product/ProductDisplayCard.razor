@@ -1,11 +1,23 @@
 @inherits ComponentBase
 @using BlazorApp.Models;
-<div class="card">
-    <img class="card-img-top" src="@Product.ProductImageUrl" alt="@Product.Name" style="max-height: 300px; max-width: 100%;" />
-    <div class="card-body">
-        <h5 class="card-title">@Product.Name</h5>
-        <p class="card-text">Price: @((int)Product.Price)</p>
-    </div>
+
+
+
+
+<div Class="rz-p-0 rz-p-md-12">
+   
+
+    <RadzenCard Variant="Variant.Outlined" Class="rz-my-12 rz-mx-auto" Style="max-width: 420px">
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+            <RadzenImage Path="@Product.ProductImageUrl" Style="width: 100px; height: 100px; border-radius: 50%;" />
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Product Name</RadzenText>
+                <RadzenText TextStyle="TextStyle.Body1"><b>@Product.Name</b></RadzenText>
+                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Price</RadzenText>
+                <RadzenText TextStyle="TextStyle.Body1"><b>@((int)Product.Price)</b></RadzenText>
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenCard>
 </div>
 
 

@@ -1,0 +1,180 @@
+@page "/bigmacdata"
+@using BlazorApp.Data
+@using Radzen.Blazor
+<div class="rz-p-12">
+    <RadzenText TextStyle="TextStyle.H3">The Economist's Big Mac Index</RadzenText>
+</div>
+
+
+<RadzenRow>
+    <RadzenColumn>
+        <RadzenCard Style="margin: 1rem;">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+                <RadzenStack Gap="0">
+                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Most Expensive</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body1"><b>@mostExpensiveItem.Country.Name</b></RadzenText>
+                </RadzenStack>
+            </RadzenStack>
+            <RadzenCard class="rz-background-color-primary-light rz-shadow-0 rz-border-radius-0 rz-p-8" style="margin: 1rem calc(-1 * var(--rz-card-padding));">
+                @if (mostExpensiveItem != null)
+                {
+                    
+                    <RadzenText TextStyle="TextStyle.H6" class="rz-color-on-primary-light"><strong>Infomation</strong></RadzenText>
+                    <RadzenRow RowGap="0">
+                        <RadzenColumn SizeSM="4">
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-color-on-primary-light rz-display-flex rz-mt-4 rz-mb-0">Local Price</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-on-primary-light"><b>@mostExpensiveItem.LocalPrice</b></RadzenText>
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-color-on-primary-light rz-display-flex rz-mt-4 rz-mb-0">Dollar Exchange Rate</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-on-primary-light"><b>@mostExpensiveItem.DollarExchangeRate</b></RadzenText>
+                        </RadzenColumn>
+                        <RadzenColumn SizeSM="8">
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-color-on-primary-light rz-display-flex rz-mt-4 rz-mb-0">Date</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-on-primary-light"><b>@mostExpensiveItem.Date</b></RadzenText>
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-color-on-primary-light rz-display-flex rz-mt-4 rz-mb-0">Currency Code</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-on-primary-light"><b>@mostExpensiveItem.CurrencyCode</b></RadzenText>
+                        </RadzenColumn>
+                    </RadzenRow>
+                }
+                
+            </RadzenCard>
+            
+        </RadzenCard>
+    </RadzenColumn>
+    <RadzenColumn>
+       <RadzenCard Style="margin: 1rem;">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+                <RadzenStack Gap="0">
+                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Cheapest</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body1"><b>@cheapestItem.Country.Name</b></RadzenText>
+                </RadzenStack>
+            </RadzenStack>
+            <RadzenCard class="rz-background-color-primary-light rz-shadow-0 rz-border-radius-0 rz-p-8" style="margin: 1rem calc(-1 * var(--rz-card-padding));">
+                @if (cheapestItem != null)
+                {
+                    
+                    <RadzenText TextStyle="TextStyle.H6" class="rz-color-on-primary-light"><strong>Infomation</strong></RadzenText>
+                    <RadzenRow RowGap="0">
+                        <RadzenColumn SizeSM="4">
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-color-on-primary-light rz-display-flex rz-mt-4 rz-mb-0">Local Price</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-on-primary-light"><b>@cheapestItem.LocalPrice</b></RadzenText>
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-color-on-primary-light rz-display-flex rz-mt-4 rz-mb-0">Dollar Exchange Rate</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-on-primary-light"><b>@cheapestItem.DollarExchangeRate</b></RadzenText>
+                        </RadzenColumn>
+                        <RadzenColumn SizeSM="8">
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-color-on-primary-light rz-display-flex rz-mt-4 rz-mb-0">Date</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-on-primary-light"><b>@cheapestItem.Date</b></RadzenText>
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-color-on-primary-light rz-display-flex rz-mt-4 rz-mb-0">Currency Code</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-on-primary-light"><b>@cheapestItem.CurrencyCode</b></RadzenText>
+                        </RadzenColumn>
+                    </RadzenRow>
+                }
+                
+            </RadzenCard>
+            
+        </RadzenCard>
+    </RadzenColumn>
+</RadzenRow>
+
+<RadzenRow>
+    <RadzenDropDown Data="@uniqueCountries" TextProperty="Name" ValueProperty="IsoA3" Placeholder="Select a country" @bind-Value="selectedCountry" Change="UpdateChart">
+        <Template Context="country">
+            <div style="display: flex; align-items: center;">
+                <span>@GetCountryFlagEmoji(country.IsoA3)</span>
+                <span>@country.Name</span>
+            </div>
+            <div @key="country.IsoA3">
+                <!-- Add a unique key for each country -->
+            </div>
+        </Template>
+    </RadzenDropDown>
+</RadzenRow>
+
+<RadzenRow>
+    <RadzenColumn Size=12>
+    <RadzenChart>
+        <RadzenLineSeries Data="@filteredData" CategoryProperty="Date" Title="Local Price" ValueProperty="LocalPrice">
+            <RadzenMarkers MarkerType="MarkerType.Circle" />
+            <RadzenSeriesDataLabels Visible="false" />
+        </RadzenLineSeries>
+
+        <RadzenCategoryAxis Padding="20" />
+        <RadzenValueAxis>
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Revenue in USD" />
+        </RadzenValueAxis>
+    </RadzenChart>
+    </RadzenColumn>
+</RadzenRow>
+
+<RadzenRow>
+    <RadzenColumn Size=12>
+        <RadzenGrid Data="@filteredData" PageSize="10">
+            <Columns>
+                <RadzenGridColumn TItem="BigMacData" Property="Date" Title="Date" />
+                <RadzenGridColumn TItem="BigMacData" Property="LocalPrice" Title="Local Price" />
+                <RadzenGridColumn TItem="BigMacData" Property="DollarExchangeRate" Title="Dollar Exchange Rate" />
+                <RadzenGridColumn TItem="BigMacData" Property="CurrencyCode" Title="Currency Code" />
+                <RadzenGridColumn TItem="BigMacData" Property="GdpLocal" Title="Local GDP" />
+                <!-- Add more columns as needed -->
+            </Columns>
+        </RadzenGrid>
+    </RadzenColumn>
+</RadzenRow>
+@code {
+    private List<BigMacData> bigMacData;
+    private List<BigMacData> filteredData;
+    private List<Country> uniqueCountries;
+    private string selectedCountry;
+    private BigMacData mostExpensiveItem;
+    private BigMacData cheapestItem;
+
+    [Inject]
+    private BigMacDataService bigMacDataService { get; set; }
+
+    private string GetCountryFlagEmoji(string isoA3)
+    {
+        if (isoA3.Length == 3 && isoA3.All(char.IsLetter))
+        {
+            // Convert ISO A3 code to flag emoji
+            return string.Join("", isoA3.Select(c => char.ConvertFromUtf32(c + 127397)));
+        }
+
+        // If the ISO A3 code is not valid, return a generic flag emoji
+        return "🏳️";
+    }
+
+    protected override void OnInitialized()
+    {
+        // Initialize data using BigMacDataService
+        bigMacData = bigMacDataService.GetBigMacData();
+        filteredData = bigMacData;
+        uniqueCountries = bigMacData
+            .Select(item => new Country { Name = item.Country.Name, IsoA3 = item.Country.IsoA3 })
+            .Distinct()
+            .ToList();
+
+        // Find the most expensive and cheapest items
+        mostExpensiveItem = bigMacData
+            .Where(item => item.DollarExchangeRate > 0) // Ignore items with Dollar Exchange Rate <= 0
+            .OrderByDescending(item => item.LocalPrice / item.DollarExchangeRate)
+            .FirstOrDefault();
+
+        cheapestItem = bigMacData
+            .Where(item => item.DollarExchangeRate > 0) // Ignore items with Dollar Exchange Rate <= 0
+            .OrderBy(item => item.LocalPrice / item.DollarExchangeRate)
+            .FirstOrDefault();
+
+    }
+
+    private void UpdateChart()
+    {
+        if (selectedCountry != null)
+        {
+            filteredData = bigMacData.Where(item => item.Country.IsoA3 == selectedCountry).ToList();
+        }
+        else
+        {
+            filteredData = bigMacData;
+        }
+    }
+}

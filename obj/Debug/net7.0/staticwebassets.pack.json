@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets/BlazorApp.bundle.scp.css"
     },
     {
+      "Id": "/Users/vickychan/Documents/DotNetPractice/BlazorApp/wwwroot/.DS_Store",
+      "PackagePath": "staticwebassets/.DS_Store"
+    },
+    {
       "Id": "/Users/vickychan/Documents/DotNetPractice/BlazorApp/wwwroot/css/bootstrap/bootstrap.min.css",
       "PackagePath": "staticwebassets/css/bootstrap/bootstrap.min.css"
     },
@@ -51,6 +55,10 @@
     {
       "Id": "/Users/vickychan/Documents/DotNetPractice/BlazorApp/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
+    },
+    {
+      "Id": "/Users/vickychan/Documents/DotNetPractice/BlazorApp/wwwroot/csv/big-mac-source-data-v2.csv",
+      "PackagePath": "staticwebassets/csv/big-mac-source-data-v2.csv"
     },
     {
       "Id": "/Users/vickychan/Documents/DotNetPractice/BlazorApp/wwwroot/favicon.png",
