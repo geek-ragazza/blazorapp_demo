@@ -152,3 +152,6 @@ Desktop.ini
 $RECYCLE.BIN/
 
 .DS_Store
+
+# Ignore Debug folders with net7.0 subfolder
+**/Debug/net7.0/
